@@ -4,42 +4,7 @@
 
 .html5-video-player
 .ytp-caption-window-container {
-    display: none !important;
-}
-
-
-/* ==================================================
-   Custom Subtitle Container
-   ================================================== */
-
-#ysc-subtitle-container {
-    position: absolute;
-
-    left: 0;
-    right: 0;
-
-    bottom: var(--ysc-bottom);
-
-    width: 100%;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    z-index: 999999;
-
-    pointer-events: none;
-
-    opacity: 0;
-
-    transition: opacity 80ms ease;
-}
-
-
-#ysc-subtitle-container.ysc-visible {
-    opacity: 1;
+    visibility: hidden !important;
 }
 
 
@@ -504,7 +469,7 @@
     width: max-content;
     max-width: var(--ysc-max-width);
 
-    z-index: 9999;
+    z-index: 999999;
 
     pointer-events: none;
 
@@ -519,7 +484,6 @@
     transition:
         opacity 80ms ease;
 }
-
 
 #ysc-subtitle-container.ysc-visible {
     opacity: 1;
