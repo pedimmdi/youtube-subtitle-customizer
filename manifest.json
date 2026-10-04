@@ -1,0 +1,50 @@
+{
+    "manifest_version": 3,
+
+    "name": "YouTube Subtitle Customizer",
+
+    "version": "0.8.0",
+
+    "description": "Customize YouTube subtitles with automatic Persian translation.",
+
+    "permissions": [
+        "storage"
+    ],
+
+    "host_permissions": [
+        "https://www.youtube.com/*"
+    ],
+
+    "icons": {
+        "16": "icon.png",
+        "32": "icon.png",
+        "48": "icon.png",
+        "100": "icon.png"
+    },
+
+    "action": {
+        "default_title": "YouTube Subtitle Customizer",
+        "default_icon": {
+            "16": "icon.png",
+            "32": "icon.png",
+            "48": "icon.png",
+            "100": "icon.png"
+        },
+        "default_popup": "popup.html"
+    },
+
+    "content_scripts": [
+        {
+            "matches": [
+                "https://www.youtube.com/*"
+            ],
+            "css": [
+                "src/content/subtitle.css"
+            ],
+            "js": [
+                "src/content/content.js"
+            ],
+            "run_at": "document_idle"
+        }
+    ]
+}

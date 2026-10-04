@@ -1,0 +1,596 @@
+/* ==================================================
+   YSC - Hide YouTube Native Subtitle
+   ================================================== */
+
+.html5-video-player
+.ytp-caption-window-container {
+    display: none !important;
+}
+
+
+/* ==================================================
+   Custom Subtitle Container
+   ================================================== */
+
+#ysc-subtitle-container {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    bottom: var(--ysc-bottom);
+
+    width: 100%;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    z-index: 999999;
+
+    pointer-events: none;
+
+    opacity: 0;
+
+    transition: opacity 80ms ease;
+}
+
+
+#ysc-subtitle-container.ysc-visible {
+    opacity: 1;
+}
+
+
+/* ==================================================
+   Subtitle Text
+   ================================================== */
+
+#ysc-subtitle-text {
+    direction: rtl;
+
+    text-align: center;
+
+    max-width: var(--ysc-max-width);
+
+    padding:
+        var(--ysc-padding-vertical)
+        var(--ysc-padding-horizontal);
+
+    box-sizing: border-box;
+
+    color: var(--ysc-text-color);
+
+    background:
+        color-mix(
+            in srgb,
+            var(--ysc-background-color)
+            calc(
+                var(--ysc-background-opacity) * 100%
+            ),
+            transparent
+        );
+
+    border-radius: var(--ysc-border-radius);
+
+    font-family: var(--ysc-font-family);
+
+    font-size: var(--ysc-font-size);
+
+    font-weight: var(--ysc-font-weight);
+
+    line-height: var(--ysc-line-height);
+
+    white-space: normal;
+
+    overflow-wrap: break-word;
+
+    word-break: normal;
+
+    text-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.9);
+}
+
+
+#ysc-subtitle-text.ysc-no-shadow {
+    text-shadow: none;
+}
+
+
+/* ==================================================
+   Settings Button
+   ================================================== */
+
+#ysc-settings-button {
+    position: absolute;
+
+    right: 82px;
+    bottom: 12px;
+
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: rgba(0, 0, 0, 0.72);
+
+    color: #ffffff;
+
+    font-size: 21px;
+
+    cursor: pointer;
+
+    z-index: 1000000;
+
+    opacity: 0.85;
+
+    transition:
+        background 0.15s ease,
+        transform 0.15s ease,
+        opacity 0.15s ease;
+}
+
+
+#ysc-settings-button:hover {
+    opacity: 1;
+
+    background: rgba(35, 35, 35, 0.95);
+
+    transform: scale(1.05);
+}
+
+
+/* ==================================================
+   Settings Panel
+   ================================================== */
+
+#ysc-settings-panel {
+    position: absolute;
+
+    right: 18px;
+    bottom: 64px;
+
+    width: 320px;
+
+    max-height: 80%;
+
+    overflow-y: auto;
+
+    box-sizing: border-box;
+
+    padding: 0;
+
+    border-radius: 14px;
+
+    background:
+        rgba(20, 20, 20, 0.96);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.10);
+
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.45);
+
+    backdrop-filter: blur(18px);
+
+    color: #ffffff;
+
+    z-index: 1000001;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transform:
+        translateY(8px)
+        scale(0.98);
+
+    transform-origin:
+        bottom right;
+
+    transition:
+        opacity 0.15s ease,
+        visibility 0.15s ease,
+        transform 0.15s ease;
+}
+
+
+#ysc-settings-panel.ysc-panel-visible {
+    opacity: 1;
+
+    visibility: visible;
+
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+
+/* ==================================================
+   Panel Header
+   ================================================== */
+
+.ysc-panel-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding:
+        14px 16px;
+
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.08);
+
+    font-size: 15px;
+
+    font-weight: 700;
+}
+
+
+#ysc-close-settings {
+    width: 30px;
+    height: 30px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255, 255, 255, 0.08);
+
+    color: #ffffff;
+
+    font-size: 20px;
+
+    line-height: 1;
+
+    cursor: pointer;
+}
+
+
+#ysc-close-settings:hover {
+    background:
+        rgba(255, 255, 255, 0.16);
+}
+
+
+/* ==================================================
+   Panel Content
+   ================================================== */
+
+.ysc-panel-content {
+    padding: 16px;
+}
+
+
+/* ==================================================
+   Setting
+   ================================================== */
+
+.ysc-setting {
+    margin-bottom: 18px;
+}
+
+
+.ysc-setting-label {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 8px;
+
+    font-size: 13px;
+
+    color:
+        rgba(255, 255, 255, 0.90);
+}
+
+
+.ysc-setting-label span {
+    color:
+        rgba(255, 255, 255, 0.55);
+
+    font-size: 12px;
+}
+
+
+/* ==================================================
+   Range
+   ================================================== */
+
+.ysc-panel-content input[type="range"] {
+    width: 100%;
+
+    height: 4px;
+
+    margin: 0;
+
+    padding: 0;
+
+    accent-color: #ff0033;
+
+    cursor: pointer;
+}
+
+
+/* ==================================================
+   Colors
+   ================================================== */
+
+.ysc-colors {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 12px;
+
+    margin:
+        4px 0 18px;
+}
+
+
+.ysc-colors label {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    padding: 9px 10px;
+
+    border-radius: 8px;
+
+    background:
+        rgba(255, 255, 255, 0.06);
+
+    font-size: 12px;
+}
+
+
+.ysc-colors input[type="color"] {
+    width: 30px;
+    height: 30px;
+
+    padding: 0;
+
+    border: none;
+
+    background: transparent;
+
+    cursor: pointer;
+}
+
+
+/* ==================================================
+   Shadow Switch
+   ================================================== */
+
+.ysc-switch-row {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 10px 0 16px;
+
+    font-size: 13px;
+}
+
+
+.ysc-switch-row input {
+    width: 18px;
+    height: 18px;
+
+    accent-color: #ff0033;
+
+    cursor: pointer;
+}
+
+
+/* ==================================================
+   Reset
+   ================================================== */
+
+.ysc-reset-button {
+    width: 100%;
+
+    padding: 10px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background:
+        rgba(255, 255, 255, 0.08);
+
+    color: #ffffff;
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease;
+}
+
+
+.ysc-reset-button:hover {
+    background:
+        rgba(255, 255, 255, 0.14);
+}
+
+
+/* ==================================================
+   Scrollbar
+   ================================================== */
+
+#ysc-settings-panel::-webkit-scrollbar {
+    width: 6px;
+}
+
+
+#ysc-settings-panel::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+#ysc-settings-panel::-webkit-scrollbar-thumb {
+    background:
+        rgba(255, 255, 255, 0.18);
+
+    border-radius: 10px;
+}
+
+
+/* ==================================================
+   Smart Line Breaking
+   ================================================== */
+
+#ysc-subtitle-text {
+    white-space: pre-line;
+
+    text-wrap: balance;
+
+    unicode-bidi: plaintext;
+}
+
+
+/* ==================================================
+   RTL / LTR
+   ================================================== */
+
+#ysc-subtitle-text.ysc-rtl {
+    direction: rtl;
+
+    text-align: center;
+}
+
+
+#ysc-subtitle-text:not(.ysc-rtl) {
+    direction: ltr;
+
+    text-align: center;
+}
+
+
+/* ==================================================
+   YSC Subtitle
+   ================================================== */
+
+#ysc-subtitle-container {
+    position: absolute;
+
+    left: 50%;
+    bottom: var(--ysc-bottom);
+
+    transform: translateX(-50%);
+
+    width: max-content;
+    max-width: var(--ysc-max-width);
+
+    z-index: 9999;
+
+    pointer-events: none;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    opacity: 0;
+
+    transition:
+        opacity 80ms ease;
+}
+
+
+#ysc-subtitle-container.ysc-visible {
+    opacity: 1;
+}
+
+
+#ysc-subtitle-text {
+    display: inline-block;
+
+    box-sizing: border-box;
+
+    max-width: 100%;
+
+    padding:
+        var(--ysc-padding-vertical)
+        var(--ysc-padding-horizontal);
+
+    border-radius:
+        var(--ysc-border-radius);
+
+    background:
+        color-mix(
+            in srgb,
+            var(--ysc-background-color)
+            calc(
+                var(--ysc-background-opacity) * 100%
+            ),
+            transparent
+        );
+
+    color:
+        var(--ysc-text-color);
+
+    font-family:
+        var(--ysc-font-family);
+
+    font-size:
+        var(--ysc-font-size);
+
+    font-weight:
+        var(--ysc-font-weight);
+
+    line-height:
+        var(--ysc-line-height);
+
+    text-align: center;
+
+    white-space: pre-line;
+
+    overflow-wrap: normal;
+
+    word-break: normal;
+
+    text-wrap: balance;
+
+    unicode-bidi: plaintext;
+
+    direction: ltr;
+
+    text-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.9),
+        0 1px 2px rgba(0, 0, 0, 0.9);
+}
+
+
+#ysc-subtitle-text.ysc-rtl {
+    direction: rtl;
+    text-align: center;
+}
+
+
+#ysc-subtitle-text.ysc-no-shadow {
+    text-shadow: none;
+}
